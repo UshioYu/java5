@@ -59,7 +59,7 @@ public class WebEntrance {
             }
         }
         //time也可提出参数，在调用的地方使用
-        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         webDriverWait = new WebDriverWait(webDriver, 10,1000);
         webDriver.get(Constant.SELENIUM_BASEURL);
         webDriver.manage().window().maximize();
@@ -75,7 +75,7 @@ public class WebEntrance {
     public MainPage login(){
         File file = new File("cookies.yaml");
         if (file.exists()) {
-            //读取yaml的cookies，塞给driver，自动登录
+            //读取yaml的cookies，塞给driver，自动登录（这里也要考虑cookies过期重新扫码生成，删除旧的xml文件）
             List<HashMap<String,Object>> cookies = new ArrayList<>();
             try {
                 ObjectMapper mapper = new ObjectMapper(new YAMLFactory());

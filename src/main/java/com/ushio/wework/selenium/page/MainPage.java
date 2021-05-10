@@ -1,5 +1,6 @@
 package com.ushio.wework.selenium.page;
 
+import com.ushio.wework.selenium.ByConstant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,7 +20,12 @@ public class MainPage extends BasePage{
     }
 
     public ContactPage goToContact() {
-        click(By.id("menu_contacts"));
+        click(ByConstant.menuContacts);
+        return new ContactPage(webDriver, webDriverWait);
+    }
+
+    public ContactPage goToAddMember() {
+        click(ByConstant.addMember);
         return new ContactPage(webDriver, webDriverWait);
     }
 }
