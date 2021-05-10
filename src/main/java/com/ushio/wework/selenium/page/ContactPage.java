@@ -84,11 +84,30 @@ public class ContactPage extends BasePage {
 
     /**
      * 暂时只考虑删除那种不含子部门的部门
-     * @param departmentName
+     * @param departmentNames
      * @return
      */
-    public ContactPage deleteDepart(String departmentName) {
-
+    public ContactPage deleteDepart(String... departmentNames) {
+        int i = 0;
+        for (String departmentName : departmentNames) {
+            LogHelper.info("departmentName:" + departmentName);
+            i += 1;
+            LogHelper.info("i:" + i);
+            if (i < departmentNames.length) {
+                By parentDepartmentNameBy = By.linkText(departmentName);
+                click(parentDepartmentNameBy);
+                ThreadUtil.sleep(300);
+                click(parentDepartmentNameBy);
+            } else {
+                By parentDepartmentNameBy = By.linkText(departmentName);
+                click(parentDepartmentNameBy);
+                webDriver.findElement(parentDepartmentNameBy)
+                        .findElement(By.xpath("span[@class='icon jstree-contextmenu-hover']")).click();
+                //ThreadUtil.sleep(300);
+                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ByConstant.deleteSubDepartment)).click();
+                click(ByConstant.confirm);
+            }
+        }
         return this;
     }
 
@@ -119,7 +138,7 @@ public class ContactPage extends BasePage {
     public String getPartyInfo() {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(partyInfo));
         String text = webDriver.findElement(partyInfo).getText();
-        System.out.println(text);
+        LogHelper.info("getPartyInfo: text:" + text);
         return text;
     }
 

@@ -59,7 +59,7 @@ public class WebEntrance {
             }
         }
         //time也可提出参数，在调用的地方使用
-        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         webDriverWait = new WebDriverWait(webDriver, 10,1000);
         webDriver.get(Constant.SELENIUM_BASEURL);
         webDriver.manage().window().maximize();

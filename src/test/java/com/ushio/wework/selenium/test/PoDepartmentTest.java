@@ -29,7 +29,14 @@ public class PoDepartmentTest {
 
     @Test
     void addSubDepartTest() {
-        WebEntrance.getInstance().login().goToContact().addSubDepart("java6","subjava6","subsubjava6");//
+        assertTrue(WebEntrance.getInstance().login().goToContact().addSubDepart("java6","subjava6","subsubjava6")
+                .searchDepart("subsubjava6").getPartyInfo().contains("subsubjava6"));
+    }
+
+    @Test
+    void deleteDepartTest() {
+        assertTrue(!(WebEntrance.getInstance().login().goToContact().deleteDepart("java6", "subjava6", "subsubjava6")
+                .searchDepart("subsubjava6").getPartyInfo().contains("subsubjava6")));
     }
 
     @Test
