@@ -103,9 +103,32 @@ public class ContactPage extends BasePage {
                 click(parentDepartmentNameBy);
                 webDriver.findElement(parentDepartmentNameBy)
                         .findElement(By.xpath("span[@class='icon jstree-contextmenu-hover']")).click();
-                //ThreadUtil.sleep(300);
                 webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ByConstant.deleteSubDepartment)).click();
                 click(ByConstant.confirm);
+            }
+        }
+        return this;
+    }
+
+    public ContactPage updateDepart(String newDepartmentName, String... departmentNames) {
+        int i = 0;
+        for (String departmentName : departmentNames) {
+            LogHelper.info("departmentName:" + departmentName);
+            i += 1;
+            LogHelper.info("i:" + i);
+            if (i < departmentNames.length) {
+                By parentDepartmentNameBy = By.linkText(departmentName);
+                click(parentDepartmentNameBy);
+                ThreadUtil.sleep(300);
+                click(parentDepartmentNameBy);
+            } else {
+                By parentDepartmentNameBy = By.linkText(departmentName);
+                click(parentDepartmentNameBy);
+                webDriver.findElement(parentDepartmentNameBy)
+                        .findElement(By.xpath("span[@class='icon jstree-contextmenu-hover']")).click();
+                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ByConstant.updateDepartment)).click();
+                sendKeys(By.name("name"), newDepartmentName);
+                click(ByConstant.save);
             }
         }
         return this;
@@ -144,7 +167,9 @@ public class ContactPage extends BasePage {
 
     public String getPartyName() {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(partyName));
-        return webDriver.findElement(partyName).getText();
+        String text = webDriver.findElement(partyName).getText();
+        LogHelper.info("getPartyName: text:" + text);
+        return text;
     }
 
 }

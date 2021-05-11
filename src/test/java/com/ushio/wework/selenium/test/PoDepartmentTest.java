@@ -24,19 +24,29 @@ public class PoDepartmentTest {
     void addDepartTest() {
         String departName = "java5";
         String parentDepartName = "独立人";
-        assertTrue(WebEntrance.getInstance().login().goToContact().addDepart(departName,parentDepartName).searchDepart(departName).getPartyInfo().contains(departName));
+        assertTrue(WebEntrance.getInstance().login().goToContact().addDepart(departName,parentDepartName).searchDepart(departName).getPartyName().contains(departName));
     }
 
     @Test
     void addSubDepartTest() {
-        assertTrue(WebEntrance.getInstance().login().goToContact().addSubDepart("java6","subjava6","subsubjava6")
-                .searchDepart("subsubjava6").getPartyInfo().contains("subsubjava6"));
+        String departName = "subsubjava6";
+        assertTrue(WebEntrance.getInstance().login().goToContact().addSubDepart("java6","subjava6",departName)
+                .searchDepart(departName).getPartyName().contains(departName));
     }
 
     @Test
     void deleteDepartTest() {
-        assertTrue(!(WebEntrance.getInstance().login().goToContact().deleteDepart("java6", "subjava6", "subsubjava6")
-                .searchDepart("subsubjava6").getPartyInfo().contains("subsubjava6")));
+        String departName = "subsubjava6";
+        assertTrue(!(WebEntrance.getInstance().login().goToContact().deleteDepart("java6", "subjava6", departName)
+                .searchDepart(departName).getPartyName().contains(departName)));
+    }
+
+    @Test
+    void updateDepartTest() {
+        String departName = "subsubjava6";
+        String newDepartName = "sub666";
+        assertTrue(WebEntrance.getInstance().login().goToContact().updateDepart(newDepartName, "java6", "subjava6",departName)
+                .searchDepart(newDepartName).getPartyName().contains(newDepartName));
     }
 
     @Test
