@@ -1,15 +1,13 @@
 package com.ushio.wework.selenium.page;
 
-import com.ushio.wework.selenium.ByConstant;
+import com.ushio.wework.selenium.ByLocator;
+import com.ushio.wework.selenium.bean.MemberBean;
 import com.ushio.wework.util.LogHelper;
 import com.ushio.wework.util.ThreadUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.Arrays;
 
 /**
  * @author: ushio
@@ -17,21 +15,21 @@ import java.util.Arrays;
  **/
 public class ContactPage extends BasePage {
 
-    private By partyInfo = By.cssSelector(".js_party_info");
-    private By partyName = By.id("party_name");
+    private By partyInfo = ByLocator.cssSelector.js_party_info;
+    private By partyName = ByLocator.id.party_name;
 
     public ContactPage(WebDriver webDriver, WebDriverWait webDriverWait) {
         super(webDriver, webDriverWait);
     }
 
     public ContactPage addDepart(String departmentName, String parentDepartmentName) {
-        click(ByConstant.add);
-        click(ByConstant.addDepartment);
+        click(ByLocator.linkText.add);
+        click(ByLocator.linkText.addDepartment);
         sendKeys(By.name("name"), departmentName);
-        click(ByConstant.chooseDepartment);
+        click(ByLocator.linkText.chooseDepartment);
         //避免使用滚动方法，可能会有各种问题
         webDriver.findElement(By.tagName("form")).findElement(By.linkText(parentDepartmentName)).click();
-        click(ByConstant.confirm);
+        click(ByLocator.linkText.confirm);
         return this;
     }
 
@@ -41,10 +39,10 @@ public class ContactPage extends BasePage {
             LogHelper.info("departmentName:" + departmentName);
             if (departmentNames.length == 1) {
                 //单独处理
-                webDriver.findElements(By.cssSelector("span.icon.jstree-contextmenu-hover")).get(0).click();
-                click(ByConstant.addSubDepartment);
-                sendKeys(By.name("name"), departmentName);
-                click(ByConstant.confirm);
+                webDriver.findElements(ByLocator.cssSelector.spanIconJstreeContextmenuHover).get(0).click();
+                click(ByLocator.linkText.addSubDepartment);
+                sendKeys(ByLocator.name.name, departmentName);
+                click(ByLocator.linkText.confirm);
                 return this;
             }
             i += 1;
@@ -66,19 +64,19 @@ public class ContactPage extends BasePage {
                 By parentDepartmentNameBy = By.linkText(departmentName);
                 click(parentDepartmentNameBy);
                 webDriver.findElement(parentDepartmentNameBy)
-                        .findElement(By.xpath("span[@class='icon jstree-contextmenu-hover']")).click();
+                        .findElement(ByLocator.xpath.spanIconJstreeContextmenuHover).click();
             } else {
-                click(ByConstant.addSubDepartment);
-                sendKeys(By.name("name"), departmentName);
-                click(ByConstant.confirm);
+                click(ByLocator.linkText.addSubDepartment);
+                sendKeys(ByLocator.name.name, departmentName);
+                click(ByLocator.linkText.confirm);
             }
         }
         return this;
     }
 
     public ContactPage searchDepart(String departmentName) {
-        click(ByConstant.memberSearchInput);
-        sendKeys(ByConstant.memberSearchInput, departmentName);
+        click(ByLocator.id.memberSearchInput);
+        sendKeys(ByLocator.id.memberSearchInput, departmentName);
         return this;
     }
 
@@ -102,9 +100,9 @@ public class ContactPage extends BasePage {
                 By parentDepartmentNameBy = By.linkText(departmentName);
                 click(parentDepartmentNameBy);
                 webDriver.findElement(parentDepartmentNameBy)
-                        .findElement(By.xpath("span[@class='icon jstree-contextmenu-hover']")).click();
-                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ByConstant.deleteSubDepartment)).click();
-                click(ByConstant.confirm);
+                        .findElement(ByLocator.xpath.spanIconJstreeContextmenuHover).click();
+                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ByLocator.linkText.deleteSubDepartment)).click();
+                click(ByLocator.linkText.confirm);
             }
         }
         return this;
@@ -125,16 +123,33 @@ public class ContactPage extends BasePage {
                 By parentDepartmentNameBy = By.linkText(departmentName);
                 click(parentDepartmentNameBy);
                 webDriver.findElement(parentDepartmentNameBy)
-                        .findElement(By.xpath("span[@class='icon jstree-contextmenu-hover']")).click();
-                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ByConstant.updateDepartment)).click();
-                sendKeys(By.name("name"), newDepartmentName);
-                click(ByConstant.save);
+                        .findElement(ByLocator.xpath.spanIconJstreeContextmenuHover).click();
+                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ByLocator.linkText.updateDepartment)).click();
+                sendKeys(ByLocator.name.name, newDepartmentName);
+                click(ByLocator.linkText.save);
             }
         }
         return this;
     }
 
-    public ContactPage addMember(){
+    public ContactPage addMember(MemberBean memberBean){
+        sendKeys(ByLocator.name.username, memberBean.getName());
+        sendKeys(ByLocator.name.english_name, memberBean.getAliasName());
+        sendKeys(ByLocator.name.acctid, memberBean.getAccount());
+        sendKeys(ByLocator.name.gender, memberBean.getSex());
+        sendKeys(ByLocator.name.mobile, memberBean.getMobile());
+        sendKeys(ByLocator.name.ext_tel, memberBean.getLandline());
+        sendKeys(ByLocator.name.alias, memberBean.getEmail());
+        sendKeys(ByLocator.name.xcx_corp_address, memberBean.getAddress());
+        //部门
+        //标签
+        sendKeys(ByLocator.name.position, memberBean.getJob());
+        sendKeys(ByLocator.name.identity_stat, memberBean.getIdentity());
+        sendKeys(ByLocator.name.extern_position_set, memberBean.getOuterJob());
+        if (!memberBean.isInvitated()) {
+            click(ByLocator.name.sendInvite);
+        }
+        click(ByLocator.linkText.save);
         return this;
     }
 
