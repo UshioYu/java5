@@ -1,0 +1,13 @@
+name: search
+steps:
+  - browserType: chrome
+  - implicitlyWait: 10
+  - get: https://ceshiren.com
+  - find: [ id,search-button ]
+  - action: [ click ]
+  - find: [ id,search-term ]
+  - action: [ sendkeys,无锡 ]
+  - action: [ sendkeys,Keys.ENTER ]
+  - find: [ css,.topic-title ]
+  - getText: title
+  - assertThat: [ title , contains: [ 无锡 ] ]
