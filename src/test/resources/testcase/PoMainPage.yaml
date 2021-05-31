@@ -1,0 +1,13 @@
+name: MainPage
+methods:
+  init:
+    - browserType: chrome
+    - implicitlyWait: 10
+    - get: https://ceshiren.com
+  search:
+    - find: [ id,search-button ]
+    - action: [ click ]
+    - find: [ id,search-term ]
+    - action: [ sendkeys,无锡 ]
+    - find: [ link_text,选项 ]
+    - action: [ click ]

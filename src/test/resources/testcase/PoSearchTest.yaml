@@ -1,0 +1,9 @@
+name: search
+steps:
+  - main_page.new: PoMainPage
+  - main_page.init:
+  - main_page.search: [ 无锡 ]
+  # 数据风格模式
+  - search_page.new: PoSearchPage
+  - search_page.get_first_title:
+  - assertThat: [ title,contains: [ 无锡 ] ]
