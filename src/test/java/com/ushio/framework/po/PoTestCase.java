@@ -15,7 +15,7 @@ public class PoTestCase {
     public void run(){
         steps.forEach(step -> {
             step.entrySet().forEach(entry -> {
-                String key = entry.getKey().toLowerCase();
+                String key = entry.getKey();
                 Object value = entry.getValue();
                 LogHelper.info("run() key:" + key+",value:"+value);
                 String[] keyStrlist = key.split("\\.");

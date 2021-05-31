@@ -12,6 +12,9 @@ import java.util.HashMap;
 public class PoPageHelper {
 
     private static volatile PoPageHelper instance;
+    private HashMap<String,PoBasePage> poBasePageHashMap = new HashMap<>();
+    //提取出driver，整个生命周期期间只有一个变量，方便各处使用
+    private WebDriver webDriver;
 
     public static PoPageHelper getInstance() {
         if (instance == null) {
@@ -24,8 +27,6 @@ public class PoPageHelper {
         return instance;
     }
 
-    private HashMap<String,PoBasePage> poBasePageHashMap = new HashMap<>();
-
     public void putPoBasePage(String key, PoBasePage poBasePage) {
         poBasePageHashMap.put(key, poBasePage);
     }
@@ -37,21 +38,47 @@ public class PoPageHelper {
         return null;
     }
 
+    public void setWebDriver(WebDriver webDriver) {
+        this.webDriver = webDriver;
+    }
+
+    public WebDriver getWebDriver() {
+        return webDriver;
+    }
+
     /**
      * 从po的yaml文件中读取数据，并生成一个BasePage的实例
      */
     public PoBasePage load(String name) {
         String path = String.format("src/test/resources/testcase/%s.yaml", name);
-        PoBasePage page = loadFromFile(path);
+        File file = new File(path);
+        PoBasePage page;
+        if (file != null && file.exists()) {
+            page = loadFromFile(file);
+        } else {
+            page = loadFromClassloader(name);
+        }
         return page;
     }
 
-    public PoBasePage loadFromFile(String path) {
+    public PoBasePage loadFromFile(File file) {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         try {
-            return mapper.readValue(new File(path), PoBasePage.class);
+            return mapper.readValue(file, PoBasePage.class);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 利用反射冲生成page实例
+     **/
+    public static PoBasePage loadFromClassloader(String className) {
+        try {
+            return (PoBasePage) Class.forName(className).getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

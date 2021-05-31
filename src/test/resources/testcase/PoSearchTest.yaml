@@ -4,6 +4,10 @@ steps:
   - main_page.init:
   - main_page.search: [ 无锡 ]
   # 数据风格模式
-  - search_page.new: PoSearchPage
-  - search_page.get_first_title:
+  #- search_page.new: PoSearchPage
+  #- search_page.get_first_title:
+  #- assertThat: [ title,contains: [ 无锡 ] ]
+  # java反射模式
+  - search_page.new: com.ushio.framework.po.PoSearchPage
+  - search_page.getFirstTitle:
   - assertThat: [ title,contains: [ 无锡 ] ]

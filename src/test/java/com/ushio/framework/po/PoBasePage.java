@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +18,18 @@ import java.util.concurrent.atomic.AtomicReference;
 @Data
 public class PoBasePage {
 
-    private WebDriver webDriver;
-
     private String name;
     private HashMap<String, List<HashMap<String,Object>>> methods;
 
     public void runMethod(String poMethod){
+        if (methods == null) {
+            try {
+                this.getClass().getMethod(poMethod).invoke(this, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
         //AtomicReference在外层定义使用
         AtomicReference<By> by = new AtomicReference<>();
         methods.get(poMethod).forEach(step -> {
@@ -33,6 +40,7 @@ public class PoBasePage {
                 switch (key){
                     case "browserType":
                         String browserStr = value.toString();
+                        WebDriver webDriver;
                         if ("chrome".equalsIgnoreCase(browserStr)) {
                             webDriver = new ChromeDriver();
                         } else if ("firefox".equalsIgnoreCase(browserStr)) {
@@ -41,12 +49,13 @@ public class PoBasePage {
                             //设个默认值
                             webDriver = new ChromeDriver();
                         }
+                        PoPageHelper.getInstance().setWebDriver(webDriver);
                         break;
                     case "implicitlyWait":
-                        webDriver.manage().timeouts().implicitlyWait((Integer) value, TimeUnit.SECONDS);
+                        PoPageHelper.getInstance().getWebDriver().manage().timeouts().implicitlyWait((Integer) value, TimeUnit.SECONDS);
                         break;
                     case "get":
-                        webDriver.get(value.toString());
+                        PoPageHelper.getInstance().getWebDriver().get(value.toString());
                         break;
                     case "find":
                         List<String> finds = (ArrayList<String>) value;
@@ -64,15 +73,15 @@ public class PoBasePage {
                         List<String> actions = (ArrayList<String>) value;
                         String actionKey = actions.get(0);
                         if ("click".equalsIgnoreCase(actionKey)) {
-                            webDriver.findElement(by.get()).click();
+                            PoPageHelper.getInstance().getWebDriver().findElement(by.get()).click();
                         } else if ("sendkeys".equalsIgnoreCase(actionKey)) {
                             String actionValue = actions.get(1);
                             if (actionValue.startsWith("Keys.")) {
                                 if ("Keys.ENTER".equalsIgnoreCase(actionValue)) {
-                                    webDriver.findElement(by.get()).sendKeys(Keys.ENTER);
+                                    PoPageHelper.getInstance().getWebDriver().findElement(by.get()).sendKeys(Keys.ENTER);
                                 }
                             } else {
-                                webDriver.findElement(by.get()).sendKeys(actionValue);
+                                PoPageHelper.getInstance().getWebDriver().findElement(by.get()).sendKeys(actionValue);
                             }
                         }
                         break;

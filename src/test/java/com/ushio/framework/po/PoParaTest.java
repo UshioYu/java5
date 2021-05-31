@@ -11,12 +11,12 @@ import java.util.stream.Stream;
 public class PoParaTest {
 
     @ParameterizedTest
-    @MethodSource("loadPoTestCasel")
+    @MethodSource("loadPoTestCase")
     void testPoTestCaseWithMethodSource(PoTestCase poTestCase) {
         poTestCase.run();
     }
 
-    static Stream<PoTestCase> loadPoTestCasel() {
+    static Stream<PoTestCase> loadPoTestCase() {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         PoTestCase poTestCase = null;
         try {
