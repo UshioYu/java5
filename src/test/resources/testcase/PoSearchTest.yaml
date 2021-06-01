@@ -4,9 +4,25 @@ steps:
   - main_page.init:
   - main_page.search: [ 无锡 ]
   # 数据风格模式
-  - search_page.new: PoSearchPage
-  - search_page.get_first_title:
-  - search_page.asserts:
+#  - search_page.new: PoSearchPage
+#  - search_page.get_first_title:
   # java反射模式
-  #- search_page.new: com.ushio.framework.po.PoSearchPage
-  #- search_page.getFirstTitle:
+  - search_page.new: com.ushio.framework.po.PoSearchPage
+  - search_page.getFirstTitle:
+asserts:
+  - actual: title
+    matcher: containsString
+    expect: '无锡'
+    reason: '未包含无锡！'
+  - actual: title
+    matcher: containsString
+    expect: '常州'
+    reason: '未包含常州！'
+  - actual: title
+    matcher: containsString
+    expect: '无锡'
+    reason: '未包含无锡11！'
+  - actual: title
+    matcher: containsString
+    expect: '苏州'
+    reason: '未包含苏州！'

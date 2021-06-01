@@ -2,18 +2,22 @@ package com.ushio.framework.po;
 
 import com.ushio.wework.util.LogHelper;
 import lombok.Data;
+import org.junit.jupiter.api.function.Executable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @Data
 public class PoTestCase {
 
     private String name;
     private List<HashMap<String,Object>> steps;
+    private List<AssertModel> asserts;
 
     public void run(){
         steps.forEach(step -> {
@@ -35,10 +39,23 @@ public class PoTestCase {
                         PoPageHelper.getInstance().getPoBasePage(poName).runMethod(poMethod);
                     }
                 } else {
-                    //key列只有一个，暂时不处理
+                    //key列只有一个
                     LogHelper.info("only has one key!");
                 }
             });
         });
+        if (asserts != null) {
+            ArrayList<Executable> assertList = new ArrayList<>();
+            asserts.stream().forEach(assertModel -> {
+                String actual = assertModel.getActual();
+                String text = String.valueOf(PoPageHelper.getInstance().getAssert(actual));
+                LogHelper.info("asserts actual:" + actual + ",text:" + text);
+                assertList.add(()->{
+                    assertThat(assertModel.getReason(), text,
+                            containsString(assertModel.getExpect()));
+                });
+            });
+            assertAll("",assertList.stream());
+        }
     }
 }

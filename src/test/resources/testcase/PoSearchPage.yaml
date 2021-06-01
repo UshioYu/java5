@@ -3,20 +3,20 @@ methods:
   get_first_title:
     - find: [ css, .topic-title ]
     - getText: title
-asserts:
-    - actual: title
-      matcher: containsString
-      expect: '无锡'
-      reason: '未包含无锡！'
-    - actual: title
-      matcher: containsString
-      expect: '常州'
-      reason: '未包含常州！'
-    - actual: title
-      matcher: containsString
-      expect: '无锡'
-      reason: '未包含无锡11！'
-    - actual: title
-      matcher: containsString
-      expect: '苏州'
-      reason: '未包含苏州！'
+#asserts:
+#    - actual: title
+#      matcher: containsString
+#      expect: '无锡'
+#      reason: '未包含无锡！'
+#    - actual: title
+#      matcher: containsString
+#      expect: '常州'
+#      reason: '未包含常州！'
+#    - actual: title
+#      matcher: containsString
+#      expect: '无锡'
+#      reason: '未包含无锡11！'
+#    - actual: title
+#      matcher: containsString
+#      expect: '苏州'
+#      reason: '未包含苏州！'
