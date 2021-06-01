@@ -13,6 +13,8 @@ public class PoPageHelper {
 
     private static volatile PoPageHelper instance;
     private HashMap<String,PoBasePage> poBasePageHashMap = new HashMap<>();
+    //存储断言结果集
+    private HashMap<String,Object> assertList = new HashMap<>();
     //提取出driver，整个生命周期期间只有一个变量，方便各处使用
     private WebDriver webDriver;
 
@@ -36,6 +38,14 @@ public class PoPageHelper {
             return poBasePageHashMap.get(key);
         }
         return null;
+    }
+
+    public Object getAssert(String key) {
+        return assertList.containsKey(key) ? assertList.get(key) : null;
+    }
+
+    public void putAssert(String key, Object assertObject) {
+        assertList.put(key, assertObject);
     }
 
     public void setWebDriver(WebDriver webDriver) {

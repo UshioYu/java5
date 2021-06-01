@@ -6,6 +6,9 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @Data
 public class PoTestCase {
 
@@ -32,7 +35,8 @@ public class PoTestCase {
                         PoPageHelper.getInstance().getPoBasePage(poName).runMethod(poMethod);
                     }
                 } else {
-                    //key列只有一个，比如assertThat这种特殊的方法
+                    //key列只有一个，暂时不处理
+                    LogHelper.info("only has one key!");
                 }
             });
         });
