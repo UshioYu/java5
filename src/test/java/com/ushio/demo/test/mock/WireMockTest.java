@@ -154,4 +154,40 @@ public class WireMockTest {
         wireMockServer.stop();
     }
 
+    @Test
+    void testRestAssuredMock() {
+        //启动wiremockserver
+        WireMockServer wireMockServer = new WireMockServer(wireMockConfig().port(8089)
+                .extensions(new ResponseTemplateTransformer(true)));
+        wireMockServer.start();
+        WireMock.configureFor(8089);
+
+        //stub设置
+
+        String jsonStr = "{\n" +
+                "\"lotto\":{\n" +
+                " \"lottoId\":5,\n" +
+                " \"winning-numbers\":[2,45,34,23,7,5,3],\n" +
+                " \"winners\":[{\n" +
+                "   \"winnerId\":23,\n" +
+                "   \"numbers\":[2,45,34,23,3,5]\n" +
+                " },{\n" +
+                "   \"winnerId\":54,\n" +
+                "   \"numbers\":[52,3,12,11,18,22]\n" +
+                " }]\n" +
+                "}\n" +
+                "}";
+        stubFor(get(urlEqualTo("/lotto")).willReturn(aResponse()
+                .withHeader("Content-Type", "application/json").withBody(jsonStr)));
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //释放相关资源
+        WireMock.reset();
+        wireMockServer.stop();
+    }
+
 }
