@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.ushio.wework.selenium.page.MainPage;
-import com.ushio.wework.util.Constant;
-import com.ushio.wework.util.ThreadUtil;
+import com.ushio.util.Constant;
+import com.ushio.util.ThreadUtil;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -61,7 +61,7 @@ public class WebEntrance {
         //time也可提出参数，在调用的地方使用
         webDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         webDriverWait = new WebDriverWait(webDriver, 10,1000);
-        webDriver.get(Constant.SELENIUM_BASEURL);
+        webDriver.get(Constant.SELENIUM_WEWORK_BASEURL);
         webDriver.manage().window().maximize();
     }
 

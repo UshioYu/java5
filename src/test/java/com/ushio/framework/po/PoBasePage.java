@@ -1,6 +1,6 @@
 package com.ushio.framework.po;
 
-import com.ushio.wework.util.LogHelper;
+import com.ushio.util.LogHelper;
 import lombok.Data;
 import org.junit.jupiter.api.function.Executable;
 import org.openqa.selenium.By;

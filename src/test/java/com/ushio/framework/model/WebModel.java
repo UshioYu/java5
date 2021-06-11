@@ -1,6 +1,6 @@
 package com.ushio.framework.model;
 
-import com.ushio.wework.util.LogHelper;
+import com.ushio.util.LogHelper;
 import lombok.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

@@ -2,8 +2,8 @@ package com.ushio.wework.selenium.page;
 
 import com.ushio.wework.selenium.ByLocator;
 import com.ushio.wework.selenium.bean.MemberBean;
-import com.ushio.wework.util.LogHelper;
-import com.ushio.wework.util.ThreadUtil;
+import com.ushio.util.LogHelper;
+import com.ushio.util.ThreadUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;

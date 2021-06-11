@@ -1,4 +1,4 @@
-package com.ushio.wework.util;
+package com.ushio.util;
 
 /**
  * @author: ushio

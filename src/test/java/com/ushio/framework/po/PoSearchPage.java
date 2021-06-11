@@ -1,6 +1,6 @@
 package com.ushio.framework.po;
 
-import com.ushio.wework.util.LogHelper;
+import com.ushio.util.LogHelper;
 import org.openqa.selenium.By;
 
 public class PoSearchPage extends PoBasePage{
