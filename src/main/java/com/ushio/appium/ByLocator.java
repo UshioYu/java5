@@ -16,6 +16,8 @@ public class ByLocator {
         By loginTextInfo = By.id("textInfo");
         By searchNameEt = By.id("search_name_et");
         By searchContentSearchRv = By.id("search_content_search_rv");
+        By searchScreenBtTxt = By.id("search_screen_bt_txt");
+        By screenResultText = By.id("screen_result_text");
 
     }
 

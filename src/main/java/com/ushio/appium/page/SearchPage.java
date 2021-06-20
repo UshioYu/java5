@@ -8,6 +8,8 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.windows.PressesKeyCode;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class SearchPage extends BasePage{
 
     public SearchPage(AppiumDriver<MobileElement> appiumDriver, WebDriverWait webDriverWait) {
@@ -25,5 +27,9 @@ public class SearchPage extends BasePage{
         return pyText;
     }
 
+    public ScreenPage toScreen(){
+        click(ByLocator.id.searchScreenBtTxt);
+        return new ScreenPage(driver,webDriverWait);
+    }
 
 }

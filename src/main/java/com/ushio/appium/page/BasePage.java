@@ -40,6 +40,10 @@ public class BasePage {
         return true;
     }
 
+    public String getText(By by){
+        return driver.findElement(by).getText();
+    }
+
     public void sendKeys(By by, String content) {
         driver.findElement(by).sendKeys(content);
     }
