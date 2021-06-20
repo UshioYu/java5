@@ -1,6 +1,8 @@
-#java5-study
-##about selenium
-
+#study
+##about appium
+* 登录
+* 搜索
+###about wework
 * 部门(包括根部门和下属一二级各级子部门)和成员的管理
     * 添加(暂不考虑一次添加多个父子部门的情况)
       逐级添加部门（done,condition：父部门已经创建） 

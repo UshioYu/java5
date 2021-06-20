@@ -190,4 +190,30 @@ public class WireMockTest {
         wireMockServer.stop();
     }
 
+    @Test
+    void testXmlAssuredMock() {
+        //启动wiremockserver
+        WireMockServer wireMockServer = new WireMockServer(wireMockConfig().port(8089)
+                .extensions(new ResponseTemplateTransformer(true)));
+        wireMockServer.start();
+        WireMock.configureFor(8089);
+
+        //stub设置
+
+        String xmlStr = "<html>\n" +
+                "  <body>{\"success\":false,\"code\":0,\"desc\":\"发生未知错误，请稍后重试\"}</body>\n" +
+                "</html>";
+        stubFor(get(urlEqualTo("/lotto")).willReturn(aResponse()
+                .withHeader("Content-Type", "text/xml").withBody(xmlStr)));
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //释放相关资源
+        WireMock.reset();
+        wireMockServer.stop();
+    }
+
 }
