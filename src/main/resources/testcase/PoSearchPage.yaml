@@ -1,0 +1,5 @@
+name: SearchPage
+methods:
+  screen:
+    - find: [ id,search_screen_bt_txt ]
+    - action: [ click ]

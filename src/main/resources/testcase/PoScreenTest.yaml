@@ -1,0 +1,28 @@
+name: screen
+steps:
+  - home_page.new: PoHomePage
+  - home_page.init:
+  - home_page.search: PoSearchPage
+  # 数据风格模式
+  - search_page.new: PoSearchPage
+  - search_page.screen: PoScreenPage
+  - screen_page.new: PoScreenPage
+  - screen_page.filter:
+  - screen_page.get_filter_text:
+asserts:
+  - actual: title
+    matcher: containsString
+    expect: '电视剧'
+    reason: '未包含电视剧！'
+  - actual: title
+    matcher: containsString
+    expect: '电影'
+    reason: '未包含电影！'
+  - actual: title
+    matcher: containsString
+    expect: '免费'
+    reason: '未包含免费！'
+  - actual: title
+    matcher: containsString
+    expect: '喜剧'
+    reason: '未包含喜剧！'

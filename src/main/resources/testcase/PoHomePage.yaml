@@ -1,0 +1,13 @@
+name: HomePage
+methods:
+  init:
+    - deviceName: Android Emulator
+    - appPackage: xx.xxxxx.xxx
+    - appActivity: .xxxxx
+    - platformName: Android
+    - noReset: true
+    - URL: http://127.0.0.1:4723/wd/hub
+    - implicitlyWait: 30
+  search:
+    - find: [ css,"*[text*='搜索']" ]
+    - action: [ click ]

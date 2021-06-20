@@ -1,4 +1,4 @@
-package com.ushio.framework.po;
+package com.ushio.appium.framework.po;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -20,7 +20,7 @@ public class PoParaTest {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         PoTestCase poTestCase = null;
         try {
-            poTestCase = objectMapper.readValue(new File("src/test/resources/testcase/PoScreenTest.yaml"), PoTestCase.class);
+            poTestCase = objectMapper.readValue(new File("src/main/resources/testcase/PoScreenTest.yaml"), PoTestCase.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

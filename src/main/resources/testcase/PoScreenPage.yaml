@@ -1,0 +1,12 @@
+name: ScreenPage
+methods:
+  filter:
+    - find: [ css,"*[text*='电视剧']" ]
+    - action: [ click ]
+    - find: [ css,"*[text*='免费']" ]
+    - action: [ click ]
+    - find: [ css,"*[text*='喜剧']" ]
+    - action: [ click ]
+  get_filter_text:
+    - find: [ id, screen_result_text ]
+    - getText: title
